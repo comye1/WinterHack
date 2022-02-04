@@ -17,7 +17,7 @@ import kotlin.math.min
 
 fun String.similar(str: String): Float {
     val len = min(this.length, str.length)
-    val distance = levenshtein(this, str)
+    val distance = levenshtein(this.trimStart(), str.trimStart())
     return 1 - distance.toFloat() / len
 }
 
@@ -28,10 +28,10 @@ fun levenshtein(lhs : CharSequence, rhs : CharSequence) : Int {
     var cost = Array(lhsLength) { it }
     var newCost = Array(lhsLength) { 0 }
 
-    for (i in 1..rhsLength-1) {
+    for (i in 1 until rhsLength) {
         newCost[0] = i
 
-        for (j in 1..lhsLength-1) {
+        for (j in 1 until lhsLength) {
             val match = if(lhs[j - 1] == rhs[i - 1]) 0 else 1
 
             val costReplace = cost[j - 1] + match
