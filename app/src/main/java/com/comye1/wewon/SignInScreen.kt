@@ -150,22 +150,13 @@ fun SignUpScreen(navController: NavHostController) {
         mutableStateOf("")
     }
 
-    val (notDuplicated, setNotDuplicated) = remember {
-        mutableStateOf(false)
-    }
+//    val (notDuplicated, setNotDuplicated) = remember {
+//        mutableStateOf(false)
+//    }
 
-    val (duplicationCheckerShown, showDuplicationChecker) = remember {
-        mutableStateOf(false)
-    }
-
-    val (signUpStatus, signUpSucceed) = remember {
-        mutableStateOf(-1)
-        /*
-        -1, 아직 요청하지 않음
-        0, 아이디가 중복됨
-        1, 성공
-         */
-    }
+//    val (duplicationCheckerShown, showDuplicationChecker) = remember {
+//        mutableStateOf(false)
+//    }
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -183,67 +174,67 @@ fun SignUpScreen(navController: NavHostController) {
                 value = id,
                 onValueChange = {
                     setID(it)
-                    setNotDuplicated(false)
+//                    setNotDuplicated(false)
                 },
                 label = { Text(text = "아이디") },
                 modifier = Modifier.fillMaxWidth(),
-                trailingIcon = {
-                    if (notDuplicated) Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "not duplicated",
-                        tint = Purple700
-                    )
-                }
+//                trailingIcon = {
+//                    if (notDuplicated) Icon(
+//                        imageVector = Icons.Default.Check,
+//                        contentDescription = "not duplicated",
+//                        tint = Purple700
+//                    )
+//                }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = {
-                    showDuplicationChecker(true)
-                    /*TODO*/
-                },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = (!notDuplicated) && id.isNotBlank()
-            ) {
-                if (notDuplicated) {
-                    Text(text = "아이디 중복 확인 완료")
-                } else {
-                    Text(text = "아이디 중복 확인")
-                }
-            }
-            if (duplicationCheckerShown) {
-                Dialog(onDismissRequest = {
-                    showDuplicationChecker(false)
-                    setNotDuplicated(true)
-                }) {
-                    Column(
-                        Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.White)
-                            .padding(32.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(buildAnnotatedString {
-                            append("아이디 ")
-                            pushStyle(SpanStyle(color = Purple700))
-                            append(id)
-                            pop()
-                            append("를 사용할 수 있습니다.")
-                        })
-                        Spacer(modifier = Modifier.height(32.dp))
-                        OutlinedButton(
-                            onClick = {
-                                showDuplicationChecker(false)
-                                setNotDuplicated(true)
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(text = "확인")
-                        }
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
+//            Button(
+//                onClick = {
+//                    showDuplicationChecker(true)
+//                    /*TODO*/
+//                },
+//                modifier = Modifier.fillMaxWidth(),
+//                enabled = (!notDuplicated) && id.isNotBlank()
+//            ) {
+//                if (notDuplicated) {
+//                    Text(text = "아이디 중복 확인 완료")
+//                } else {
+//                    Text(text = "아이디 중복 확인")
+//                }
+//            }
+//            if (duplicationCheckerShown) {
+//                Dialog(onDismissRequest = {
+//                    showDuplicationChecker(false)
+//                    setNotDuplicated(true)
+//                }) {
+//                    Column(
+//                        Modifier
+//                            .clip(RoundedCornerShape(8.dp))
+//                            .background(Color.White)
+//                            .padding(32.dp),
+//                        verticalArrangement = Arrangement.Center,
+//                        horizontalAlignment = Alignment.CenterHorizontally
+//                    ) {
+//                        Text(buildAnnotatedString {
+//                            append("아이디 ")
+//                            pushStyle(SpanStyle(color = Purple700))
+//                            append(id)
+//                            pop()
+//                            append("를 사용할 수 있습니다.")
+//                        })
+//                        Spacer(modifier = Modifier.height(32.dp))
+//                        OutlinedButton(
+//                            onClick = {
+//                                showDuplicationChecker(false)
+//                                setNotDuplicated(true)
+//                            },
+//                            modifier = Modifier.fillMaxWidth()
+//                        ) {
+//                            Text(text = "확인")
+//                        }
+//                    }
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
                 value = pw,
                 onValueChange = setPW,
@@ -277,26 +268,17 @@ fun SignUpScreen(navController: NavHostController) {
                         signUp(id, pw, {
                             navController.navigate(Screen.LogIn.route)
                         }, {
-                            Toast.makeText(context, "회원가입에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "아이디가 중복되었습니다.", Toast.LENGTH_SHORT).show()
                         })
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = notDuplicated && (pw.isNotBlank() && (pw == pwAgain))
+                enabled = (pw.isNotBlank() && (pw == pwAgain))
             ) {
                 Text(text = "회원가입")
             }
         }
     }
-}
-
-suspend fun idCheck(
-    id: String,
-    pw: String,
-    onSuccess: () -> Unit,
-    onFailures: () -> Unit
-) {
-
 }
 
 suspend fun signUp(
