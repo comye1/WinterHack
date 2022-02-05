@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.secrets_gradle_plugin' version '0.4'
 }
 
 android {
@@ -68,11 +69,12 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha04"
+    implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
 
     // ConstraintLayout
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
 
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // Retrofit with Moshi Converter
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
     // Moshi

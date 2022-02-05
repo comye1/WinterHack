@@ -3,62 +3,45 @@ package com.comye1.wewon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.rememberDrawerState
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.comye1.wewon.network.Repository
+import com.comye1.wewon.network.WeWonApi
+import com.comye1.wewon.network.models.VocaItem
 import com.comye1.wewon.ui.theme.Cream
 import com.comye1.wewon.ui.theme.PointBlue
 import com.comye1.wewon.util.simpleVerticalScrollbar
-import kotlinx.coroutines.launch
 
 @Composable
-fun VocaScreen(navController: NavHostController) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+fun VocaScreen(navController: NavHostController, repository: Repository) {
 
-    val scope = rememberCoroutineScope()
+    var words by rememberSaveable {
+        mutableStateOf(listOf<VocaItem>())
+    }
 
-    ModalDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            DrawerContent(navController)
-        },
-        content = {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title = {
-                            Text(text = "어휘 모음")
-                        }, navigationIcon = {
-                            IconButton(onClick = {
-                                scope.launch { drawerState.open() }
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Menu,
-                                    contentDescription = "menu"
-                                )
+    val header = repository.getHeaderMap()
 
-                            }
-                        }
-                    )
-                }
-            )
-            {
-                VocaContent()
-            }
-        }
-    )
+    LaunchedEffect(true) {
+        words = WeWonApi.retrofitService.getVoca(header)
+    }
+
+    VocaContent(words)
 }
 
 @Composable
-fun VocaContent() {
+fun VocaContent(words: List<VocaItem>) {
     val lazyListState = rememberLazyListState()
     LazyColumn(
         state = lazyListState,
@@ -67,32 +50,27 @@ fun VocaContent() {
             .padding(16.dp)
             .simpleVerticalScrollbar(lazyListState)
     ) {
-        repeat(20) {
-            item {
-                VocaItem()
-                Spacer(modifier = Modifier.height(8.dp))
-            }
+        items(words) {
+            VocaItem(it)
         }
     }
 }
 
 @Composable
-fun VocaItem() {
-    Row(Modifier.fillMaxWidth()) {
+fun VocaItem(vocaItem: VocaItem) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Column(
             Modifier
                 .fillMaxWidth(.4f)
                 .padding(4.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(Cream)
+                .padding(vertical = 4.dp, horizontal = 16.dp)
         ) {
             Text(
-                text = "단어",
+                text = vocaItem.voca,
                 style = MaterialTheme.typography.h5,
                 color = PointBlue,
-                modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .background(Cream)
-                    .padding(vertical = 4.dp, horizontal = 16.dp)
             )
         }
 
@@ -102,7 +80,7 @@ fun VocaItem() {
                 .padding(8.dp),
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "뜻", style = MaterialTheme.typography.h6)
+            Text(text = vocaItem.meaning, style = MaterialTheme.typography.h6)
         }
     }
 }

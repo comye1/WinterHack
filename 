@@ -1,0 +1,35 @@
+[33mcommit 038688258a8628ff12577c1923ecb2530281d610[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mwinterhack/master[m[33m)[m
+Author: comye1 <comye1@seoultech.ac.kr>
+Date:   Thu Feb 3 19:48:10 2022 +0900
+
+    백엔드를 위한 폴더
+
+[33mcommit 9ab9c09f7a0d01eb703cade3b6536cfebce1f6dc[m
+Author: comye1 <comye1@seoultech.ac.kr>
+Date:   Thu Feb 3 19:26:35 2022 +0900
+
+    util - STT 기능, 문장 유사도 계산
+
+[33mcommit 6d6f12a06142c69971e39205c3c5af0a37db2426[m
+Author: comye1 <comye1@seoultech.ac.kr>
+Date:   Thu Feb 3 13:35:29 2022 +0900
+
+    screens - 홈화면 (드로어, 버튼)
+
+[33mcommit 6e8e648dcc414c1c6290900f66465cc36b402d2a[m
+Author: comye1 <comye1@seoultech.ac.kr>
+Date:   Thu Feb 3 03:08:12 2022 +0900
+
+    screens - 로그인, 회원가입 화면
+
+[33mcommit 3f8d80e9f5599f093162743f46010a7a356d0835[m
+Author: comye1 <comye1@seoultech.ac.kr>
+Date:   Thu Feb 3 01:55:00 2022 +0900
+
+    dependencies - Icons & Navigation
+
+[33mcommit 781897a5592a7e34765e2b8ccdc0296e7dc3c1d3[m
+Author: comye1 <comye1@seoultech.ac.kr>
+Date:   Thu Feb 3 01:49:20 2022 +0900
+
+    initial commit

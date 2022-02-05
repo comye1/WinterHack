@@ -8,7 +8,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comye1.wewon.ui.theme.Purple200
+import com.comye1.wewon.ui.theme.SkyBlue
 
 @Composable
 fun Modifier.simpleVerticalScrollbar(
@@ -29,7 +29,7 @@ fun Modifier.simpleVerticalScrollbar(
             val scrollbarHeight = state.layoutInfo.visibleItemsInfo.size * elementHeight
 
             drawRect(
-                color = Purple200,
+                color = SkyBlue,
                 topLeft = Offset(this.size.width - width.toPx(), scrollbarOffsetY),
                 size = Size(width.toPx(), scrollbarHeight),
                 alpha = 0.4f
